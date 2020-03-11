@@ -1,60 +1,49 @@
 # Subspace - A simple WireGuard VPN server GUI
 
-![Screenshot](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot1.png?cachebust=8923409243)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+[![](https://images.microbadger.com/badges/image/subspacecommunity/subspace.svg)](https://microbadger.com/images/subspacecommunity/subspace "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/subspacecommunity/subspace.svg)](https://microbadger.com/images/subspacecommunity/subspace "Get your own version badge on microbadger.com")
 
 ## Screenshots
 
-[Screenshot 1](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot1.png)
+![Screenshot](https://raw.githubusercontent.com/subspacecommunity/subspace/master/screenshot1.png?cachebust=8923409243)
 
-[Screenshot 2](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot2.png)
-
-[Screenshot 3](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot3.png)
-
-[Screenshot 4](https://raw.githubusercontent.com/subspacecloud/subspace/master/screenshot4.png)
+|                                                                                                      |                                                                                                      |     |
+| :--------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------: | --- |
+| ![Screenshot 1](https://raw.githubusercontent.com/subspacecommunity/subspace/master/screenshot1.png) | ![Screenshot 3](https://raw.githubusercontent.com/subspacecommunity/subspace/master/screenshot3.png) |
+| ![Screenshot 2](https://raw.githubusercontent.com/subspacecommunity/subspace/master/screenshot2.png) | ![Screenshot 4](https://raw.githubusercontent.com/subspacecommunity/subspace/master/screenshot4.png) |
 
 ## Features
 
-* **WireGuard VPN Protocol**
-  * The most modern and fastest VPN protocol.
-* **Single Sign-On (SSO) with SAML**
-  * Support for SAML providers like G Suite and Okta.
-* **Add Devices**
-  * Connect from Mac OS X, Windows, Linux, Android, or iOS.
-* **Remove Devices**
-  * Removes client key and disconnects client.
-* **Auto-generated Configs**
-  * Each client gets a unique downloadable config file.
-  * Generates a QR code for easy importing on iOS and Android.
-
-## Run Subspace on Portal Cloud
-
-Portal Cloud is a hosting service that enables anyone to run open source cloud applications.
-
-[Sign up for Portal Cloud](https://portal.cloud/) and get $15 free credit with code **Portal15**.
-
-## Run Subspace on a VPS
-
-Running Subspace on a VPS is designed to be as simple as possible.
-
-  * Public Docker image.
-  * Single static Go binary with assets bundled.
-  * Automatic TLS using Let's Encrypt.
-  * Redirects http to https.
-  * Works with a reverse proxy or standalone.
+- **WireGuard VPN Protocol**
+  - The most modern and fastest VPN protocol.
+- **Single Sign-On (SSO) with SAML**
+  - Support for SAML providers like G Suite and Okta.
+- **Add Devices**
+  - Connect from Mac OS X, Windows, Linux, Android, or iOS.
+- **Remove Devices**
+  - Removes client key and disconnects client.
+- **Auto-generated Configs**
+  - Each client gets a unique downloadable config file.
+  - Generates a QR code for easy importing on iOS and Android.
 
 ### 1. Get a server
 
 **Recommended Specs**
 
-* Type: VPS or dedicated
-* Distribution: Ubuntu 16.04 (Xenial)
-* Memory: 512MB or greater
+- Type: VPS or dedicated
+- Distribution: Ubuntu 16.04 (Xenial) or Ubuntu 18.04 (Bionic)
+- Memory: 512MB or greater
 
 ### 2. Add a DNS record
 
 Create a DNS `A` record in your domain pointing to your server's IP address.
 
-**Example:** `subspace.example.com  A  172.16.1.1`
+**Example:** `subspace.example.com A 172.16.1.1`
 
 ### 3. Enable Let's Encrypt
 
@@ -62,8 +51,8 @@ Subspace runs a TLS ("SSL") https server on port 443/tcp. It also runs a standar
 
 **Requirements**
 
-* Your server must have a publicly resolvable DNS record.
-* Your server must be reachable over the internet on ports 80/tcp and 443/tcp and 51820/udp (WireGuard).
+- Your server must have a publicly resolvable DNS record.
+- Your server must be reachable over the internet on ports 80/tcp, 443/tcp and 51820/udp (Default WireGuard port, user changeable).
 
 ### Usage
 
@@ -72,6 +61,7 @@ Subspace runs a TLS ("SSL") https server on port 443/tcp. It also runs a standar
 ```bash
 $ subspace --http-host subspace.example.com
 ```
+
 ### Usage
 
 ```bash
@@ -94,11 +84,12 @@ $ subspace --http-host subspace.example.com
   -version
         display version and exit
 ```
+
 ### Run as a Docker container
 
 #### Install WireGuard on the host
 
-The container expects WireGuard to be installed on the host. The official image is `subspacecloud/subspace`.
+The container expects WireGuard to be installed on the host. The official image is `subspacecommunity/subspace`.
 
 ```bash
 add-apt-repository -y ppa:wireguard/wireguard
@@ -138,8 +129,20 @@ docker create \
     --cap-add NET_ADMIN \
     --volume /usr/bin/wg:/usr/bin/wg \
     --volume /data:/data \
-    --env SUBSPACE_HTTP_HOST=subspace.example.com \
-    subspacecloud/subspace:latest
+    --env SUBSPACE_HTTP_HOST="subspace.example.com" \
+	# Optional variable to change upstream DNS provider
+    --env SUBSPACE_NAMESERVER="1.1.1.1" \
+	# Optional variable to change WireGuard Listenport
+    --env SUBSPACE_LISTENPORT="51820" \
+    # Optional variables to change IPv4/v6 prefixes
+    --env SUBSPACE_IPV4_POOL="10.99.97.0/24" \
+    --env SUBSPACE_IPV6_POOL="fd00::10:97:0/64" \
+	# Optional variables to change IPv4/v6 Gateway
+	--env SUBSPACE_IPV4_GW="10.99.97.1" \
+    --env SUBSPACE_IPV6_GW="fd00::10:97:1" \
+	# Optional variable to enable or disable IPv6 NAT
+    --env SUBSPACE_IPV6_NAT_ENABLED=1 \
+    subspacecommunity/subspace:latest
 
 $ sudo docker start subspace
 
@@ -149,13 +152,42 @@ $ sudo docker logs subspace
 
 ```
 
+#### Docker-Compose Example
+
+```
+version: "3.3"
+services:
+  subspace:
+   image: subspace/subspace:latest
+   container_name: subspace
+   volumes:
+    - /usr/bin/wg:/usr/bin/wg
+    - /opt/docker/subspace:/data
+   restart: always
+   environment:
+    - SUBSPACE_HTTP_HOST=subspace.example.org
+    - SUBSPACE_LETSENCRYPT=true
+    - SUBSPACE_HTTP_INSECURE=false
+    - SUBSPACE_HTTP_ADDR=":80"
+    - SUBSPACE_NAMESERVER=1.1.1.1
+    - SUBSPACE_LISTENPORT=51820
+    - SUBSPACE_IPV4_POOL=10.99.97.0/24
+    - SUBSPACE_IPV6_POOL="fd00::10:97:0/64"
+    - SUBSPACE_IPV4_GW="10.99.97.1"
+    - SUBSPACE_IPV6_GW="fd00::10:97:1"
+    - SUBSPACE_IPV6_NAT_ENABLED=1
+   cap_add:
+    - NET_ADMIN
+   network_mode: "host"
+```
+
 #### Updating the container image
 
 Pull the latest image, remove the container, and re-create the container as explained above.
 
 ```bash
 # Pull the latest image
-$ sudo docker pull subspacecloud/subspace
+$ sudo docker pull subspacecommunity/subspace
 
 # Stop the container
 $ sudo docker stop subspace
@@ -167,7 +199,24 @@ $ sudo docker rm subspace
 $ sudo docker create ... (see above)
 ```
 
-## Help / Reporting Bugs
+## Contributors ✨
 
-Email support@portal.cloud
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://duncan.codes"><img src="https://avatars2.githubusercontent.com/u/15332?v=4" width="100px;" alt=""/><br /><sub><b>Duncan Mac-Vicar P.</b></sub></a><br /><a href="https://github.com/subspacecommunity/subspace/commits?author=dmacvicar" title="Code">💻</a></td>
+    <td align="center"><a href="https://opsnotice.xyz"><img src="https://avatars1.githubusercontent.com/u/12403145?v=4" width="100px;" alt=""/><br /><sub><b>Valentin Ouvrard</b></sub></a><br /><a href="https://github.com/subspacecommunity/subspace/commits?author=valentin2105" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/agonbar"><img src="https://avatars3.githubusercontent.com/u/1553211?v=4" width="100px;" alt=""/><br /><sub><b>Adrián González Barbosa</b></sub></a><br /><a href="https://github.com/subspacecommunity/subspace/commits?author=agonbar" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

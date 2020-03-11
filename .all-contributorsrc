@@ -1,0 +1,42 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "dmacvicar",
+      "name": "Duncan Mac-Vicar P.",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/15332?v=4",
+      "profile": "https://duncan.codes",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "valentin2105",
+      "name": "Valentin Ouvrard",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12403145?v=4",
+      "profile": "https://opsnotice.xyz",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "agonbar",
+      "name": "Adrián González Barbosa",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1553211?v=4",
+      "profile": "https://github.com/agonbar",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "subspace",
+  "projectOwner": "subspacecommunity",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
