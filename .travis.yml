@@ -21,7 +21,7 @@ git:
 
 # Skip the install step. Don't `go get` dependencies. Only build with the code
 # in vendor/
-install: true
+install: false
 
 # Don't email me the results of the test runs.
 notifications:
@@ -31,8 +31,6 @@ notifications:
 # build and immediately stop. It's sorta like having set -e enabled in bash.
 # We can download and extract the golangci-lint binary in one (long) command.
 before_script: 
-  - go get -u github.com/jteeuwen/go-bindata/...
-  - go run github.com/jteeuwen/go-bindata/go-bindata --pkg main static/... templates/... email/...
   - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $GOPATH/bin v1.23.1
 
 # script always runs to completion (set +e). If we have linter issues AND a
