@@ -1,4 +1,5 @@
 # Subspace - A simple WireGuard VPN server GUI
+[![Build Status](https://travis-ci.org/gavinelder/subspace.svg?branch=master)](https://travis-ci.org/gavinelder/subspace)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
@@ -138,7 +139,7 @@ docker create \
     --env SUBSPACE_IPV4_POOL="10.99.97.0/24" \
     --env SUBSPACE_IPV6_POOL="fd00::10:97:0/64" \
 	# Optional variables to change IPv4/v6 Gateway
-	--env SUBSPACE_IPV4_GW="10.99.97.1" \
+    --env SUBSPACE_IPV4_GW="10.99.97.1" \
     --env SUBSPACE_IPV6_GW="fd00::10:97:1" \
 	# Optional variable to enable or disable IPv6 NAT
     --env SUBSPACE_IPV6_NAT_ENABLED=1 \
